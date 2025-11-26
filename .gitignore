@@ -1,0 +1,47 @@
+# Exclude backup files
+backup_old_files/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tensorboard logs
+checkpoints/*/tensorboard/
+
+# Large model files and data
+checkpoints/*.pt
+checkpoints/**/*.pt
+*.onnx
+*.onnx.data
+onnx_models_v1/
+onnx_models_v2/
+
+# Audio clips (too large for GitHub)
+data/cv-corpus-23.0-2025-09-05/*/clips/
+*.mp3
+*.wav
+
+# Keep only processed data and metadata
+!data/processed/
+data/cv-corpus-23.0-2025-09-05/*/clip_durations.tsv

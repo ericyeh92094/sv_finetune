@@ -1,0 +1,55 @@
+# Enhanced Training Configuration for SenseVoice zh-TW + zh Preservation
+# Ultra-conservative settings to avoid catastrophic forgetting
+
+# Model Configuration
+model: iic/SenseVoiceSmall
+model_dir: ./models/iic/SenseVoiceSmall
+device: cpu
+cudnn_enabled: false
+cudnn_benchmark: false
+
+# Dataset Configuration  
+train_data_set_list: ./data/processed/train.jsonl
+valid_data_set_list: ./data/processed/dev.jsonl
+dataset_conf:
+  index_ds: IndexDSJsonl
+  data_split_num: 1
+  batch_sampler: BatchSampler
+  batch_size: 2  # Smaller for more stable gradients (was 4)
+  batch_type: length
+  max_token_length: 2048
+  num_workers: 4
+  frontend_conf:
+    fs: 16000
+
+# Optimizer with Strong Regularization
+optim: adam
+optim_conf:
+  lr: 1.0e-05  # Ultra-low LR (was 5e-05, now 5x more conservative)
+  weight_decay: 0.05  # Strong regularization (was 0.01, now 5x stronger)
+  eps: 1.0e-08
+  betas:
+  - 0.9
+  - 0.999
+
+# Learning Rate Scheduler
+scheduler: warmuplr
+scheduler_conf:
+  warmup_steps: 500  # Gradual warmup (was 1000, now faster warmup for low LR)
+
+# Training Configuration
+train_conf:
+  max_epoch: 15  # More epochs with slower learning (was 10)
+  log_interval: 50
+  save_checkpoint_interval: 500
+  validate_interval: 500
+  accum_grad: 4  # Keep gradient accumulation for stability
+  grad_clip: 3.0  # Tighter clipping (was 5.0)
+  use_fp16: false
+  keep_nbest_models: 5
+  avg_nbest_model: 5
+  find_unused_parameters: false
+
+# Output
+output_dir: ./checkpoints/sensevoice_zh_combined_v2
+seed: 42

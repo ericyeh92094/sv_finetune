@@ -1,0 +1,42 @@
+model: iic/SenseVoiceSmall
+model_dir: ./models/iic/SenseVoiceSmall
+is_training: true
+device: cpu
+cudnn_enabled: false
+cudnn_benchmark: false
+train_data_set_list: ./data/processed/train.jsonl
+valid_data_set_list: ./data/processed/dev.jsonl
+dataset_conf:
+  index_ds: IndexDSJsonl
+  data_split_num: 1
+  batch_sampler: BatchSampler
+  batch_size: 4
+  batch_type: length
+  max_token_length: 2048
+  num_workers: 4
+  frontend_conf:
+    fs: 16000
+optim: adam
+optim_conf:
+  lr: 5.0e-05
+  weight_decay: 0.01
+  eps: 1.0e-08
+  betas:
+  - 0.9
+  - 0.999
+scheduler: warmuplr
+scheduler_conf:
+  warmup_steps: 1000
+train_conf:
+  max_epoch: 10
+  log_interval: 50
+  save_checkpoint_interval: 500
+  validate_interval: 500
+  accum_grad: 4
+  grad_clip: 5.0
+  use_fp16: false
+  keep_nbest_models: 5
+  avg_nbest_model: 5
+  find_unused_parameters: false
+output_dir: ./checkpoints/sensevoice_zh_tw_funasr
+seed: 42

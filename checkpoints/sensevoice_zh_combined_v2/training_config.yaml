@@ -1,0 +1,65 @@
+accum_grad: 2
+batch_bins: 200000
+best_model_criterion:
+- - valid
+  - loss
+  - min
+data_path: ./data/processed
+dataset_type: audio
+dev_subset: dev.jsonl
+device: cpu
+freeze_param: []
+frontend_conf:
+  frame_length: 25
+  frame_shift: 10
+  fs: 16000
+  lfr_m: 7
+  lfr_n: 6
+  n_mels: 80
+grad_clip: 3.0
+grad_clip_type: norm
+keep_nbest_models: 5
+log_interval: 50
+lr: 1.0e-05
+max_epoch: 15
+model: ./models/iic/SenseVoiceSmall
+model_conf:
+  ctc_conf:
+    dropout_rate: 0.1
+num_workers: 4
+optim: adam
+optim_conf:
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.05
+output_dir: ./checkpoints/sensevoice_zh_combined_v2
+save_checkpoint_interval: 500
+scheduler: warmuplr
+scheduler_conf:
+  lr_decay: 0.995
+  warmup_steps: 500
+specaug: specaug
+specaug_conf:
+  apply_freq_mask: true
+  apply_time_mask: true
+  apply_time_warp: false
+  freq_mask_width_range:
+  - 0
+  - 10
+  num_freq_mask: 1
+  num_time_mask: 1
+  time_mask_width_range:
+  - 0
+  - 30
+  time_warp_mode: bicubic
+  time_warp_window: 5
+speed_perturb:
+- 0.95
+- 1.0
+- 1.05
+train_subset: train.jsonl
+val_scheduler_criterion:
+- valid
+- loss
