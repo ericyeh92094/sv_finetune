@@ -2,6 +2,23 @@
 
 This project finetunes the FunASR SenseVoiceSmall model for Taiwanese Mandarin (zh-TW) using the Common Voice dataset.
 
+## 📥 Large Files Repository
+
+**IMPORTANT**: The trained models, ONNX files, and audio samples are stored in a separate repository due to their size:
+
+👉 **[sv_finetune_data](https://github.com/ericyeh92094/sv_finetune_data)** - Download trained models and data files
+
+To use the models, clone both repositories:
+```bash
+git clone https://github.com/ericyeh92094/sv_finetune.git
+git clone https://github.com/ericyeh92094/sv_finetune_data.git
+
+# Create symlinks to data files
+cd sv_finetune
+ln -s ../sv_finetune_data/onnx_models onnx_models_v2
+ln -s ../sv_finetune_data/checkpoints checkpoints
+```
+
 ## 📊 Dataset
 
 - **Source**: Mozilla Common Voice v23.0 zh-TW
